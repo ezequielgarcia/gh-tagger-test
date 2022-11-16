@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - uses: juliangruber/read-file-action@v1
         id: version
@@ -28,8 +26,11 @@ jobs:
           text: ${{ steps.version.outputs.content }}
           regex: '```[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]```'
 
-      - uses: actions-ecosystem/action-push-tag@v1
-        if: ${{ steps.version.outputs.content != null }}
-        with:
-          tag: ${{ steps.version.outputs.content }}
-          message: "${{ steps.version.outputs.content }}"
+      - name: Tagger boy
+        run: |
+          tag=${{ steps.version.outputs.content }}
+          message='${{ steps.version.outputs.content }}'
+          git config user.name "Ezequiel Garcia"
+          git config user.email "ezequiel@vanguardiasur.com.ar"
+          git tag -a "${tag}" -m "${message}"
+          git push origin "${tag}"
