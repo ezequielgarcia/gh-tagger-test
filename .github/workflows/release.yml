@@ -29,5 +29,5 @@ jobs:
       - uses: actions-ecosystem/action-push-tag@v1
         if: ${{ steps.version.outputs.content != null }}
         with:
-          text: ${{ steps.version.outputs.content }}
+          tag: ${{ steps.version.outputs.content }}
           message: "${{ steps.version.outputs.content }}"
