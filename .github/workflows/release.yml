@@ -1,0 +1,33 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: juliangruber/read-file-action@v1
+        id: version
+        with:
+          path: ./VERSION
+
+     - name: Echo version
+       run: echo "${{ steps.version.outputs.content }}"
+
+     - uses: actions-ecosystem/action-regex-match@v2
+       id: regex-match
+       if: ${{ steps.version.outputs.content != null }}
+       with:
+         text: ${{ steps.version.outputs.content }}
+         regex: '```[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]```'
+
+     - uses: actions-ecosystem/action-push-tag@v1
+       if: ${{ steps.version.outputs.content != null }}
+       with:
+         text: ${{ steps.version.outputs.content }}
+         message: "${{ steps.version.outputs.content }}""
