@@ -17,9 +17,7 @@ jobs:
         id: version
         with:
           path: ./VERSION
-
           text: ${{ steps.version.outputs.content }}
-          regex: '```[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]```'
 
       - run: |
           tag=${{ steps.version.outputs.content }}
