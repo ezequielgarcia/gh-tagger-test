@@ -22,7 +22,7 @@ jobs:
       - run: |
           tag=${{ steps.version.outputs.content }}
           message='${{ steps.version.outputs.content }}'
-          [[ ${tag} =~ ^[0-9]+(\.[0-9]+)*(_QA)?$ ]] || exit 1
+          [[ ${tag} =~ ^[0-9]+(\.[0-9]+)*(_QA)?$ ]] || (echo "malformed version $tag"; exit 1)
           git config user.name "Ezequiel Garcia"
           git config user.email "ezequiel@vanguardiasur.com.ar"
           git tag -a "${tag}" -m "${message}"
