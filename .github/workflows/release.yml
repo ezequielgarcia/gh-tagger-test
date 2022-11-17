@@ -11,13 +11,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: juliangruber/read-file-action@v1
         id: version
         with:
           path: ./VERSION
-          text: ${{ steps.version.outputs.content }}
 
       - run: |
           tag=${{ steps.version.outputs.content }}
